@@ -5,6 +5,7 @@ Tác giả: Pair Programming with Antigravity AI Assistant
 """
 
 import io
+import os
 import re
 import datetime
 import numpy as np
@@ -1320,13 +1321,17 @@ if uploaded_file is None:
     
     # Nút nạp thử file mẫu nếu có trong thư mục
     try:
-        sample_path = "d:/DATA/KIEMDO_13895/GL_094_TK13895 (010126-311026).xlsx"
-        with open(sample_path, "rb") as f:
-            sample_bytes = f.read()
-        if st.button("📂 Nạp trực tiếp file mẫu: GL_094_TK13895 (010126-311026).xlsx"):
-            uploaded_file = io.BytesIO(sample_bytes)
-            uploaded_file.name = "GL_094_TK13895 (010126-311026).xlsx"
-            st.rerun()
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        sample_path = os.path.join(current_dir, "GL_094_TK13895 (010126-311026).xlsx")
+        if not os.path.exists(sample_path):
+            sample_path = "GL_094_TK13895 (010126-311026).xlsx"
+        if os.path.exists(sample_path):
+            with open(sample_path, "rb") as f:
+                sample_bytes = f.read()
+            if st.button("📂 Nạp trực tiếp file mẫu: GL_094_TK13895 (010126-311026).xlsx"):
+                uploaded_file = io.BytesIO(sample_bytes)
+                uploaded_file.name = "GL_094_TK13895 (010126-311026).xlsx"
+                st.rerun()
     except Exception:
         pass
 
